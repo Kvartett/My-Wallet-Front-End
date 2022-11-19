@@ -1,18 +1,28 @@
+import { useState } from "react"
 import styled from "styled-components"
+import Entry from "./Entry"
 
-export default function Content() {
+export default function Content(props) {
+    const { balance, total } = props
+
+    if (balance === undefined || balance.length === 0) {
+        return (
+            <ContentContainer>
+                <List>
+                    <NoBalance>You don't have entrys here!</NoBalance>
+                </List>
+            </ContentContainer>
+        )
+    }
+
     return (
         <ContentContainer>
             <List>
-                <Entry>
-                    <Date>30/11</Date>
-                    <Decription>Almoço</Decription>
-                    <Value>39,90</Value>
-                </Entry>
+                {balance.map((balance, i) => <Entry balance={balance} key={i} />)}
             </List>
-            <Total>
-                <h3>Saldo</h3>
-                <p>3000,00</p>
+            <Total total={total} >
+                <h3>SALDO</h3>
+                <p>{total.toFixed(2)}</p>
             </Total>
         </ContentContainer>
     )
@@ -32,38 +42,6 @@ const List = styled.ul`
     box-sizing: border-box;
 `
 
-const Entry = styled.li`
-    display: flex;
-`
-
-const Date = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    color: #C6C6C6;
-    margin-right: 10px;
-`
-
-const Decription = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    color: #000000;
-`
-
-const Value = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    text-align: right;
-    color: #000000;
-    position: absolute;
-    right: 15px;
-`
-
 const Total = styled.div`
     display: flex;
     justify-content: space-between;
@@ -71,10 +49,29 @@ const Total = styled.div`
         position: absolute;
         bottom: 10px;
         left: 15px;
-    }
+        font-style: normal;
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 20px;
+        color: #000000;
+        }
     p {
         position: absolute;
         bottom: 10px;
         right: 15px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 20px;
+        color: ${(props) => props.total > 0 ? "#03AC00" : "#C70000"};
     }
+`
+
+const NoBalance = styled.p`
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    color: #868686;
 `

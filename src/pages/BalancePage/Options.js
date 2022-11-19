@@ -1,13 +1,24 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Options() {
+    const navigate = useNavigate()
+
+    function goAddPage() {
+        navigate("/addPage")
+    }
+
+    function goSubPage() {
+        navigate("/subPage")
+    }
+
     return (
         <OptionsContainer>
-            <AddValue>
+            <AddValue onClick={goAddPage} >
                 <ion-icon name="add-circle-outline"></ion-icon>
                 <p>Add value</p>
             </AddValue>
-            <SubValue>
+            <SubValue onClick={goSubPage} >
                 <ion-icon name="remove-circle-outline"></ion-icon>
                 <p>Subtract value</p>
             </SubValue>

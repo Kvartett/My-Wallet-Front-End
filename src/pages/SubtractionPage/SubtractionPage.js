@@ -2,10 +2,9 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { useAuth } from "../../providers/Auth"
-import AddForm from "./AddForm"
+import SubForm from "./SubForm"
 
-
-export default function AdditionPage() {
+export default function SubtractionPage() {
     const { user } = useAuth()
     const navigate = useNavigate()
 
@@ -17,8 +16,8 @@ export default function AdditionPage() {
 
     return (
         <PageContainer>
-            <h1>New Add</h1>
-            <AddForm />
+            <h1>New Subtraction</h1>
+            <SubForm />
         </PageContainer>
     )
 }

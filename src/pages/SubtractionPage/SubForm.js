@@ -9,10 +9,10 @@ import dayjs from "dayjs"
 dayjs.locale("pt-br")
 
 
-export default function AddForm() {
+export default function SubForm() {
     const { user, config } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
-    const [form, setForm] = useState({ description: "", value: "", type: "positive" })
+    const [form, setForm] = useState({ description: "", value: "", type: "negative" })
     const navigate = useNavigate()
 
     function handleForm(e) {
@@ -42,8 +42,7 @@ export default function AddForm() {
                     setForm("")
                 })
                 .catch(err => {
-                    alert("Erro")
-                    console.log(err.response)
+                    alert(err.response.data.message)
                     setIsLoading(false)
                 })
         }
