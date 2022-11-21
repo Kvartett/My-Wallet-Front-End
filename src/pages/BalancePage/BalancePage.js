@@ -10,8 +10,8 @@ import { BASE_URL } from "../../constants/url.js"
 export default function BalancePage() {
     const { user, config } = useAuth()
     const [balance, setBalance] = useState([])
-    const [total, setTotal] = useState(0)
     const navigate = useNavigate()
+    const [balanceLoaded, setBalanceLoaded] = useState(false)
 
     useEffect(() => {
         if (user.token === "") {
@@ -21,39 +21,28 @@ export default function BalancePage() {
         }
     }, [])
 
-    useEffect(() => {
-        updateTotal()
-    }, [balance])
-
-
-    function updateTotal() {
-        balance.forEach((e) => {
-            if (e.type === "positive") {
-                setTotal(total + parseFloat(e.value))
-            } else {
-                setTotal(total - parseFloat(e.value))
-            }
-        })
-    }
-
     function getBalance() {
         axios.get(`${BASE_URL}/balance`, config)
             .then(res => {
                 setBalance(res.data)
+                setBalanceLoaded(true)
             })
             .catch(err => {
                 console.log(err.response)
             })
     }
-    setInterval(console.log(balance), 3000)
+
+    function reloadPage() {
+        window.location.reload(false)
+    }
 
     return (
         <PageContainer>
             <NavBar>
                 <h2>Hello, {user.name} </h2>
-                <ion-icon name="log-out-outline"></ion-icon>
+                <ion-icon onClick={reloadPage} name="log-out-outline"></ion-icon>
             </NavBar>
-            <Content balance={balance} total={total} />
+            <Content balance={balance} balanceLoaded={balanceLoaded} />
             <Options />
         </PageContainer>
     )

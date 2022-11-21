@@ -3,18 +3,20 @@ import styled from "styled-components"
 
 export default function Entry(props) {
     const { balance } = props
+    const newValue = parseFloat(balance.value).toFixed(2)
 
     return (
         <EntryContainer>
             <Date>{balance.date}</Date>
             <Decription>{balance.description}</Decription>
-            <Value type={balance.type}>{balance.value}</Value>
+            <Value type={balance.type}>{newValue}</Value>
         </EntryContainer>
     )
 }
 
 const EntryContainer = styled.li`
     display: flex;
+    margin-bottom: 10px;
 `
 
 const Date = styled.p`

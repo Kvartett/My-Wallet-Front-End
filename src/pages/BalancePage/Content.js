@@ -1,9 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Entry from "./Entry"
 
+
 export default function Content(props) {
-    const { balance, total } = props
+    const [total, setTotal] = useState(0)
+    const { balance, balanceLoaded } = props
+
+    useEffect(() => {
+        updateTotal()
+    }, [balanceLoaded])
+
+
+    function updateTotal() {
+        let newTotal = total
+        balance.forEach((e) => {
+            if (e.type === "positive") {
+                newTotal += parseFloat(e.value)
+            } else {
+                newTotal -= parseFloat(e.value)
+            }
+        })
+        setTotal(newTotal)
+    }
 
     if (balance === undefined || balance.length === 0) {
         return (
