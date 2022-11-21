@@ -16,7 +16,7 @@ export default function RegisterForm() {
     function sendRegister(e) {
         e.preventDefault()
 
-        if (!form.password === form.confirmPassword) {
+        if (!(form.password === form.confirmPassword)) {
             return alert("The passwords are different!")
         }
 
